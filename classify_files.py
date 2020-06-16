@@ -78,8 +78,13 @@ if __name__ == "__main__":
     # ファイルをquestion1とquestion2以下にコピーする
     for f in l:
         copied_file_path = get_file_path(f)
-        print(f)
+        student_id, name = get_studentid_and_name(f)
+        f1 = "{}_{}_1".format(student_id, name)
+        f2 = "{}_{}_2".format(student_id, name)
+
         for cf in copied_file_path:
+            shutil.copy2(cf, os.path.join("question1",f1))
+            shutil.copy2(cf, os.path.join("question2",f2))
             print(cf)
         print()
 
