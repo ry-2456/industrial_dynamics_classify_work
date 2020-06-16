@@ -26,6 +26,26 @@ def extract_zip(path_to_zipfile, dst):
             info.filename = info.filename.encode("cp437").decode("cp932")
             zip_file.extract(info, dst)
 
+def get_file_path(base_dir):
+    # base_dir以下のファイルのpathをすべて取得する
+    l = os.listdir(base_dir)
+    # zipファイルがあれば除く
+    l = [f for f in l if not "zip" in f]
+
+    for f in l:
+        # フォルダがある場合
+        if os.path.isdir(os.path.join(base_dir, f)):
+            files = os.listdir(os.path.join(base_dir, f))
+            file_path = [os.path.join(base_dir, f, f_name) 
+                    for f_name in files]
+            break
+
+    else:
+        file_path = [os.path.join(base_dir, f_name)
+                        for f_name in l]
+    
+    return file_path
+
 if __name__ == "__main__":
     if not os.path.exists("question1"):
         os.mkdir("./" + os.sep + "question1")
@@ -56,6 +76,13 @@ if __name__ == "__main__":
                 print("#########################\n")
 
     # ファイルをquestion1とquestion2以下にコピーする
+    for f in l:
+        copied_file_path = get_file_path(f)
+        print(f)
+        for cf in copied_file_path:
+            print(cf)
+        print()
+
 
     cwd = os.getcwd()
 
